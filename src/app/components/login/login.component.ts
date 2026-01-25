@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginResponse } from '../../models/login.model';
+import { LoginRequest } from '../../models/login.model';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule],
@@ -10,9 +10,8 @@ import { LoginResponse } from '../../models/login.model';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  http = inject(HttpClient);
-  router = inject(Router);
-  apiUrl = 'https://dummyjson.com/auth/login';
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   loginForm = new FormGroup({
     username: new FormControl(''),
@@ -20,10 +19,10 @@ export class LoginComponent {
   });
 
   onSubmit() {
-    this.http.post<LoginResponse>(this.apiUrl, this.loginForm.value).subscribe({
+    this.authService.login(this.loginForm.value as LoginRequest).subscribe({
       next: (response) => {
         if (response.accessToken) {
-          localStorage.setItem('employee-management', JSON.stringify(response));
+          this.authService.storeUserData(response);
           this.router.navigateByUrl('dashboard');
           console.log('Login Successful');
         } else {
