@@ -13,4 +13,8 @@ export class AuthService {
   login(credentials: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.apiUrl, credentials);
   }
+
+  storeUserData(response: LoginResponse) {
+    localStorage.setItem('employee-management', JSON.stringify(response));
+  }
 }
