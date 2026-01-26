@@ -14,12 +14,12 @@ export class LoginComponent {
   private router = inject(Router);
 
   loginForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
+    username: new FormControl('', { nonNullable: true }),
+    password: new FormControl('', { nonNullable: true }),
   });
 
   onSubmit() {
-    this.authService.login(this.loginForm.value as LoginRequest).subscribe({
+    this.authService.login(this.loginForm.getRawValue()).subscribe({
       next: (response) => {
         if (response.accessToken) {
           this.authService.storeUserData(response);
