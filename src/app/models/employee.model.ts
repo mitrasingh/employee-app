@@ -1,14 +1,15 @@
 export interface Employee {
   id: number;
-  employee_id: string;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  phone: string;
-  department: string;
-  employment_type: string;
-  status: string;
+  departmentId: number;
+  jobTitle: string;
+  hireDate: string;
   salary: number;
-  hire_date: string;
-  office_location: string;
+  location: 'New York' | 'San Francisco' | 'Chicago';
+  isActive: boolean;
+  avatarUrl: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
