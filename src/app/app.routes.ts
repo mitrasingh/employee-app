@@ -2,7 +2,10 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { EmployeeComponent } from './components/employee/employee.component';
+import { EmployeesComponent } from './components/employees/employees.component';
+import { DepartmentsComponent } from './components/departments/departments.component';
+import { LocationsComponent } from './components/locations/locations.component';
+import { ReportsComponent } from './components/reports/reports.component';
 
 export const routes: Routes = [
   {
@@ -23,8 +26,20 @@ export const routes: Routes = [
         component: DashboardComponent,
       },
       {
-        path: 'employee',
-        component: EmployeeComponent,
+        path: 'employees',
+        component: EmployeesComponent,
+      },
+      {
+        path: 'departments',
+        component: DepartmentsComponent,
+      },
+      {
+        path: 'locations',
+        component: LocationsComponent,
+      },
+      {
+        path: 'reports',
+        component: ReportsComponent,
       },
     ],
   },
