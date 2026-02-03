@@ -1,13 +1,15 @@
+import { Location } from './location.model';
+import { Department } from './department.model';
 export interface Employee {
   id: number;
   firstName: string;
   lastName: string;
   email: string;
-  departmentId: number;
+  department: Department;
   jobTitle: string;
   hireDate: string;
   salary: number;
-  location: 'New York' | 'San Francisco' | 'Chicago';
+  location: Location;
   isActive: boolean;
   avatarUrl: string | null;
   createdAt: string;
