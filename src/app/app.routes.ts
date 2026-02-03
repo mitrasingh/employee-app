@@ -7,6 +7,7 @@ import { DepartmentsComponent } from './components/departments/departments.compo
 import { LocationsComponent } from './components/locations/locations.component';
 import { ReportsComponent } from './components/reports/reports.component';
 
+// Will add employee details, departments details and location details later
 export const routes: Routes = [
   {
     path: '',
