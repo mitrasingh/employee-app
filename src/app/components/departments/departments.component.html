@@ -1,1 +1,72 @@
-<p>departments works!</p>
+<div class="departments-container">
+  <header class="departments-header">
+    <div class="header-content">
+      <h1>Departments</h1>
+      <p class="subtitle">Manage organizational departments and team structure</p>
+    </div>
+    <button class="btn-primary">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+      Add Department
+    </button>
+  </header>
+
+  <div class="departments-grid">
+    <!-- Department Card -->
+    <div class="department-card">
+      <div class="card-header">
+        <div class="department-info">
+          <h3 class="department-name">Engineering</h3>
+          <span class="employee-count">24 employees</span>
+        </div>
+        <button class="btn-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path
+              d="M10 6V10M10 14H10.01M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div class="card-body">
+        <div class="stat-row">
+          <span class="stat-label">Manager</span>
+          <span class="stat-value">Sarah Chen</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Location</span>
+          <span class="stat-value">San Francisco</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Budget</span>
+          <span class="stat-value">$2.4M</span>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn-text">Edit</button>
+        <button class="btn-text danger">Delete</button>
+      </div>
+    </div>
+
+    <!-- Empty State (show when no departments) -->
+    <div class="empty-state">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" class="empty-icon">
+        <rect x="8" y="16" width="48" height="40" rx="4" stroke="currentColor" stroke-width="2" />
+        <path
+          d="M20 28H44M20 36H44M20 44H32"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+      </svg>
+      <h3>No departments yet</h3>
+      <p>Get started by creating your first department</p>
+      <button class="btn-primary">Create Department</button>
+    </div>
+  </div>
+</div>
