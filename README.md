@@ -57,3 +57,16 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Environment Setup
+
+1. Copy the environment template files:
+
+```bash
+   cp src/environments/environment.template.ts src/environments/environment.ts
+   cp src/environments/environment.prod.template.ts src/environments/environment.prod.ts
+```
+
+2. Update the copied files with your Supabase credentials:
+   - Get your Supabase URL and anon key from your Supabase project settings
+   - Replace `YOUR_SUPABASE_URL_HERE` and `YOUR_SUPABASE_ANON_KEY_HERE`
