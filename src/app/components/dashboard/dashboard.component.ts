@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../../services/employee.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +15,7 @@ export class DashboardComponent implements OnInit {
     this.employeeService.getEmployees().subscribe({
       next: (data) => {
         console.log('Employees:', data);
+        console.log(environment.supabase.anonKey);
       },
       error: (error) => {
         console.error('Error fetching employees:', error);
