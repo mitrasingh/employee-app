@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Employee } from '../models/employee.model';
 
 @Injectable({
@@ -15,7 +15,12 @@ export class EmployeeService {
     Authorization: `Bearer ${environment.supabase.anonKey}`,
   });
 
-  getEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(`${this.baseUrl}/employees`, { headers: this.headers });
+  private employeesSubject = new BehaviorSubject<Employee[]>([]);
+  employees$ = this.employeesSubject.asObservable();
+
+  loadEmployees(): void {
+    this.http
+      .get<Employee[]>(`${this.baseUrl}/employees`, { headers: this.headers })
+      .subscribe((data) => this.employeesSubject.next(data));
   }
 }
