@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { EmployeeService } from '../../services/employee.service';
-import { environment } from '../../../environments/environment';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,18 +8,11 @@ import { environment } from '../../../environments/environment';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent implements OnInit {
-  constructor(private employeeService: EmployeeService) {}
-
-  ngOnInit(): void {
-    this.employeeService.getEmployees().subscribe({
-      next: (data) => {
-        console.log('Employees:', data);
-        console.log(environment.supabase.anonKey);
-      },
-      error: (error) => {
-        console.error('Error fetching employees:', error);
-      },
+export class DashboardComponent {
+  constructor(private employeeService: EmployeeService) {
+    this.employeeService.employees$.pipe(takeUntilDestroyed()).subscribe({
+      next: (data) => console.log('Employees:', data),
+      error: (err) => console.error('Error fetching employees:', err),
     });
   }
 }
