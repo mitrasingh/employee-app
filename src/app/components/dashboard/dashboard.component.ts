@@ -10,6 +10,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class DashboardComponent {
   constructor(private employeeService: EmployeeService) {
+    this.employeeService.loadEmployees();
     this.employeeService.employees$.pipe(takeUntilDestroyed()).subscribe({
       next: (data) => console.log('Employees:', data),
       error: (err) => console.error('Error fetching employees:', err),
