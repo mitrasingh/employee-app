@@ -18,13 +18,13 @@ export class EmployeeService {
   private employeesSubject = new BehaviorSubject<Employee[]>([]);
   employees$ = this.employeesSubject.asObservable();
 
-  // loadEmployees(): void {
-  //   this.http
-  //     .get<Employee[]>(`${this.baseUrl}/employees`, { headers: this.headers })
-  //     .subscribe((data) => this.employeesSubject.next(data));
-  // }
-
-  getEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(`${this.baseUrl}/employees`, { headers: this.headers });
+  loadEmployees(): void {
+    this.http
+      .get<Employee[]>(`${this.baseUrl}/employees`, { headers: this.headers })
+      .subscribe((data) => this.employeesSubject.next(data));
   }
+
+  // getEmployees(): Observable<Employee[]> {
+  //   return this.http.get<Employee[]>(`${this.baseUrl}/employees`, { headers: this.headers });
+  // }
 }
