@@ -1,23 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../../services/employee.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-dashboard',
   imports: [],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   employeeCount: number = 0;
-  constructor(private employeeService: EmployeeService) {
-    this.employeeService.loadEmployees();
-    this.employeeService.employees$.pipe(takeUntilDestroyed()).subscribe({
-      next: (data) => {
-        console.log('Employees:', data);
-        this.employeeCount = data.length;
+  constructor(private employeeService: EmployeeService) {}
+  ngOnInit(): void {
+    this.employeeService.employees$.pipe(map((data) => data.length)).subscribe({
+      next: (count) => {
+        this.employeeCount = count;
       },
-      error: (err) => console.error('Error fetching employees:', err),
+      error: (err) => console.error(err),
     });
   }
 }
