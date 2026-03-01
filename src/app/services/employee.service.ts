@@ -23,8 +23,4 @@ export class EmployeeService {
       .get<Employee[]>(`${this.baseUrl}/employees`, { headers: this.headers })
       .subscribe((data) => this.employeesSubject.next(data));
   }
-
-  // getEmployees(): Observable<Employee[]> {
-  //   return this.http.get<Employee[]>(`${this.baseUrl}/employees`, { headers: this.headers });
-  // }
 }
