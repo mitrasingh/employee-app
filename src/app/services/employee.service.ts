@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Employee } from '../models/employee.model';
 
 @Injectable({
@@ -19,8 +19,15 @@ export class EmployeeService {
   employees$ = this.employeesSubject.asObservable();
 
   loadEmployees(): void {
-    this.http
-      .get<Employee[]>(`${this.baseUrl}/employees`, { headers: this.headers })
-      .subscribe((data) => this.employeesSubject.next(data));
+    console.log('loadEmployees called');
+    this.http.get<Employee[]>(`${this.baseUrl}/employees`, { headers: this.headers }).subscribe({
+      next: (data) => {
+        console.log('API response:', data);
+        this.employeesSubject.next(data);
+      },
+      error: (err) => {
+        console.error('API error:', err);
+      },
+    });
   }
 }
