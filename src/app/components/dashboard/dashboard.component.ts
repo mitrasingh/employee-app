@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../../services/employee.service';
-import { map } from 'rxjs/operators';
+
 @Component({
   selector: 'app-dashboard',
   imports: [],
@@ -9,13 +9,19 @@ import { map } from 'rxjs/operators';
 })
 export class DashboardComponent implements OnInit {
   employeeCount: number = 0;
+
   constructor(private employeeService: EmployeeService) {}
+
   ngOnInit(): void {
-    this.employeeService.employees$.pipe(map((data) => data.length)).subscribe({
-      next: (count) => {
-        this.employeeCount = count;
+    this.employeeService.employees$.subscribe({
+      next: (data) => {
+        console.log('Employee data received:', data);
+        this.employeeCount = data.length;
+        console.log('Employee count set to:', this.employeeCount);
       },
-      error: (err) => console.error(err),
+      error: (err) => console.error('Error:', err),
     });
+
+    this.employeeService.loadEmployees();
   }
 }
