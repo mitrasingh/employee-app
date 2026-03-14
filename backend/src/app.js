@@ -26,7 +26,8 @@ app.get('/health', (req, res) => res.json({ status: 'ok' }));
 // Run schema on startup
 async function initDb() {
   try {
-    const schema = fs.readFileSync(path.join(__dirname, 'db/schema.sql'), 'utf8');
+    const schemaPath = path.join(process.cwd(), 'src/db/schema.sql');
+    const schema = fs.readFileSync(schemaPath, 'utf8');
     await pool.query(schema);
     console.log('✅ Database schema ready');
   } catch (err) {
