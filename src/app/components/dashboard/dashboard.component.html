@@ -27,7 +27,7 @@
       <div class="stat-content">
         <p class="stat-label">Total Employees</p>
         <h2 class="stat-value">{{ employeeCount }}</h2>
-        <p class="stat-change positive">1,156 active</p>
+        <p class="stat-change positive">Company-wide</p>
       </div>
     </div>
 
@@ -39,8 +39,10 @@
       </div>
       <div class="stat-content">
         <p class="stat-label">Newest Hire</p>
-        <h2 class="stat-value">Sarah Johnson</h2>
-        <p class="stat-change positive">Engineering</p>
+        <h2 class="stat-value">
+          {{ newestHire ? newestHire.first_name + ' ' + newestHire.last_name : 'N/A' }}
+        </h2>
+        <p class="stat-change positive">{{ newestHire?.department || '' }}</p>
       </div>
     </div>
 
@@ -52,8 +54,8 @@
       </div>
       <div class="stat-content">
         <p class="stat-label">Departments</p>
-        <h2 class="stat-value">7</h2>
-        <p class="stat-change neutral">Across 3 locations</p>
+        <h2 class="stat-value">{{ departmentCount }}</h2>
+        <p class="stat-change neutral">Across {{ locations.length }} locations</p>
       </div>
     </div>
 
@@ -88,59 +90,11 @@
       </div>
       <div class="card-content">
         <div class="chart-bars">
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">Engineering</div>
+          <div class="chart-bar-item" *ngFor="let dept of departments">
+            <div class="chart-bar-label">{{ dept.name }}</div>
             <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 85%" data-value="340"></div>
-              <span class="chart-bar-value">340</span>
-            </div>
-          </div>
-
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">Sales</div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 65%" data-value="260"></div>
-              <span class="chart-bar-value">260</span>
-            </div>
-          </div>
-
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">Marketing</div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 45%" data-value="180"></div>
-              <span class="chart-bar-value">180</span>
-            </div>
-          </div>
-
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">Product</div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 40%" data-value="160"></div>
-              <span class="chart-bar-value">160</span>
-            </div>
-          </div>
-
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">Design</div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 30%" data-value="120"></div>
-              <span class="chart-bar-value">120</span>
-            </div>
-          </div>
-
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">HR</div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 25%" data-value="100"></div>
-              <span class="chart-bar-value">100</span>
-            </div>
-          </div>
-
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">Finance</div>
-            <div class="chart-bar-wrapper">
-              <div class="chart-bar" style="width: 22%" data-value="88"></div>
-              <span class="chart-bar-value">88</span>
+              <div class="chart-bar" [style.width.%]="dept.employee_count"></div>
+              <span class="chart-bar-value">{{ dept.employee_count }}</span>
             </div>
           </div>
         </div>
@@ -155,7 +109,7 @@
       </div>
       <div class="card-content">
         <div class="location-stats">
-          <div class="location-item">
+          <div class="location-item" *ngFor="let loc of locations">
             <div class="location-info">
               <div class="location-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -165,42 +119,8 @@
                 </svg>
               </div>
               <div class="location-details">
-                <p class="location-name">New York</p>
-                <p class="location-count">520 employees</p>
-              </div>
-            </div>
-            <button class="btn-view">View</button>
-          </div>
-
-          <div class="location-item">
-            <div class="location-info">
-              <div class="location-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
-                  />
-                </svg>
-              </div>
-              <div class="location-details">
-                <p class="location-name">San Francisco</p>
-                <p class="location-count">450 employees</p>
-              </div>
-            </div>
-            <button class="btn-view">View</button>
-          </div>
-
-          <div class="location-item">
-            <div class="location-info">
-              <div class="location-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
-                  />
-                </svg>
-              </div>
-              <div class="location-details">
-                <p class="location-name">Chicago</p>
-                <p class="location-count">278 employees</p>
+                <p class="location-name">{{ loc.city }}</p>
+                <p class="location-count">employees</p>
               </div>
             </div>
             <button class="btn-view">View</button>
@@ -217,7 +137,7 @@
       </div>
       <div class="card-content">
         <div class="department-grid">
-          <div class="department-card">
+          <div class="department-card" *ngFor="let dept of departments">
             <div class="dept-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                 <path
@@ -226,48 +146,8 @@
               </svg>
             </div>
             <div class="dept-info">
-              <h4>Engineering</h4>
-              <p class="dept-count">340 employees</p>
-              <p class="dept-avg">Avg: $95,000</p>
-            </div>
-          </div>
-
-          <div class="department-card">
-            <div class="dept-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" />
-              </svg>
-            </div>
-            <div class="dept-info">
-              <h4>Sales</h4>
-              <p class="dept-count">260 employees</p>
-              <p class="dept-avg">Avg: $72,000</p>
-            </div>
-          </div>
-
-          <div class="department-card">
-            <div class="dept-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
-              </svg>
-            </div>
-            <div class="dept-info">
-              <h4>Marketing</h4>
-              <p class="dept-count">180 employees</p>
-              <p class="dept-avg">Avg: $68,000</p>
-            </div>
-          </div>
-
-          <div class="department-card">
-            <div class="dept-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2l-5.5 9h11z M12 22l5.5-9h-11z" />
-              </svg>
-            </div>
-            <div class="dept-info">
-              <h4>Product</h4>
-              <p class="dept-count">160 employees</p>
-              <p class="dept-avg">Avg: $88,000</p>
+              <h4>{{ dept.name }}</h4>
+              <p class="dept-count">{{ dept.employee_count }} employees</p>
             </div>
           </div>
         </div>
