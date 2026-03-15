@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
@@ -8,26 +8,33 @@ import { Employee } from '../models/employee.model';
   providedIn: 'root',
 })
 export class EmployeeService {
-  private baseUrl = `${environment.supabase.apiUrl}/rest/v1`;
-  private headers = new HttpHeaders({
-    apikey: environment.supabase.anonKey,
-    Authorization: `Bearer ${environment.supabase.anonKey}`,
-  });
+  private baseUrl = `${environment.apiUrl}/employees`;
 
-  constructor(private http: HttpClient) {}
   private employeesSubject = new BehaviorSubject<Employee[]>([]);
   employees$ = this.employeesSubject.asObservable();
 
+  constructor(private http: HttpClient) {}
+
   loadEmployees(): void {
-    console.log('loadEmployees called');
-    this.http.get<Employee[]>(`${this.baseUrl}/employees`, { headers: this.headers }).subscribe({
+    this.http.get<Employee[]>(this.baseUrl).subscribe({
       next: (data) => {
-        console.log('API response:', data);
         this.employeesSubject.next(data);
       },
       error: (err) => {
         console.error('API error:', err);
       },
     });
+  }
+
+  addEmployee(employee: Partial<Employee>) {
+    return this.http.post<Employee>(this.baseUrl, employee);
+  }
+
+  updateEmployee(id: number, employee: Partial<Employee>) {
+    return this.http.put<Employee>(`${this.baseUrl}/${id}`, employee);
+  }
+
+  deleteEmployee(id: number) {
+    return this.http.delete(`${this.baseUrl}/${id}`);
   }
 }
