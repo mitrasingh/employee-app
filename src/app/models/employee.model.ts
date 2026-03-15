@@ -1,17 +1,16 @@
-import { Location } from './location.model';
-import { Department } from './department.model';
 export interface Employee {
   id: number;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
-  department: Department;
-  jobTitle: string;
-  hireDate: string;
+  department: string;
+  department_id: number;
+  job_title: string;
+  hire_date: string;
   salary: number;
-  location: Location;
-  isActive: boolean;
-  avatarUrl: string | null;
-  createdAt: string;
-  updatedAt: string;
+  location: string;
+  location_id: number;
+  is_active: boolean;
+  avatar_url: string | null;
+  created_at: string;
 }

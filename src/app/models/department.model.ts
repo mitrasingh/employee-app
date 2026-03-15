@@ -1,18 +1,6 @@
-export type Department =
-  | 'Engineering'
-  | 'Sales'
-  | 'Marketing'
-  | 'Product'
-  | 'Design'
-  | 'HR'
-  | 'Finance';
-
-export const DEPARTMENTS: Department[] = [
-  'Engineering',
-  'Sales',
-  'Marketing',
-  'Product',
-  'Design',
-  'HR',
-  'Finance',
-];
+export interface Department {
+  id: number;
+  name: string;
+  employee_count?: number;
+  created_at: string;
+}
