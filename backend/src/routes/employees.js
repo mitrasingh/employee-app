@@ -10,8 +10,10 @@ router.get('/', async (req, res) => {
         e.id, e.first_name, e.last_name, e.email,
         e.job_title, e.hire_date, e.salary,
         e.is_active, e.avatar_url, e.created_at,
-        d.name AS department,
-        l.city AS location
+        e.department_id,
+        d.name AS department_name,
+        e.location_id,
+        l.city AS location_city
       FROM employees e
       LEFT JOIN departments d ON e.department_id = d.id
       LEFT JOIN locations l ON e.location_id = l.id
@@ -23,7 +25,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET single employee
+// GET employee by ID
 router.get('/:id', async (req, res) => {
   try {
     const result = await pool.query(
@@ -32,8 +34,10 @@ router.get('/:id', async (req, res) => {
         e.id, e.first_name, e.last_name, e.email,
         e.job_title, e.hire_date, e.salary,
         e.is_active, e.avatar_url, e.created_at,
-        d.name AS department, d.id AS department_id,
-        l.city AS location, l.id AS location_id
+        e.department_id,
+        d.name AS department_name,
+        e.location_id,
+        l.city AS location_city
       FROM employees e
       LEFT JOIN departments d ON e.department_id = d.id
       LEFT JOIN locations l ON e.location_id = l.id
@@ -42,7 +46,10 @@ router.get('/:id', async (req, res) => {
       [req.params.id],
     );
 
-    if (result.rows.length === 0) return res.status(404).json({ error: 'Employee not found' });
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Employee not found' });
+    }
+
     res.json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -80,7 +87,7 @@ router.post('/', async (req, res) => {
         salary,
         location_id,
         is_active ?? true,
-        avatar_url,
+        avatar_url ?? null,
       ],
     );
     res.status(201).json(result.rows[0]);
@@ -107,10 +114,10 @@ router.put('/:id', async (req, res) => {
     const result = await pool.query(
       `
       UPDATE employees
-      SET first_name=$1, last_name=$2, email=$3, department_id=$4,
-          job_title=$5, hire_date=$6, salary=$7, location_id=$8,
-          is_active=$9, avatar_url=$10
-      WHERE id=$11
+      SET first_name = $1, last_name = $2, email = $3, department_id = $4,
+          job_title = $5, hire_date = $6, salary = $7, location_id = $8,
+          is_active = $9, avatar_url = $10
+      WHERE id = $11
       RETURNING *
     `,
       [
@@ -128,7 +135,10 @@ router.put('/:id', async (req, res) => {
       ],
     );
 
-    if (result.rows.length === 0) return res.status(404).json({ error: 'Employee not found' });
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Employee not found' });
+    }
+
     res.json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -138,10 +148,14 @@ router.put('/:id', async (req, res) => {
 // DELETE employee
 router.delete('/:id', async (req, res) => {
   try {
-    const result = await pool.query('DELETE FROM employees WHERE id=$1 RETURNING *', [
+    const result = await pool.query('DELETE FROM employees WHERE id = $1 RETURNING *', [
       req.params.id,
     ]);
-    if (result.rows.length === 0) return res.status(404).json({ error: 'Employee not found' });
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Employee not found' });
+    }
+
     res.json({ message: 'Employee deleted', employee: result.rows[0] });
   } catch (err) {
     res.status(500).json({ error: err.message });
