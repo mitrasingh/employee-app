@@ -28,19 +28,23 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.employeeService.employees$.subscribe((data) => {
+      console.log('📦 Employees received:', data.length); // Add this
       this.employeeCount = data.length;
       this.newestHire = data.length > 0 ? data[0] : null;
     });
 
     this.departmentService.departments$.subscribe((data) => {
+      console.log('📦 Departments received:', data.length); // Add this
       this.departments = data;
       this.departmentCount = data.length;
     });
 
     this.locationService.locations$.subscribe((data) => {
+      console.log('📦 Locations received:', data.length); // Add this
       this.locations = data;
     });
 
+    console.log('🚀 Loading data...');
     this.employeeService.loadEmployees();
     this.departmentService.loadDepartments();
     this.locationService.loadLocations();
