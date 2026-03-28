@@ -1,11 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { map } from 'rxjs';
 import { EmployeeService } from '../../services/employee.service';
-import { DepartmentService } from '../../services/department.service';
-import { LocationService } from '../../services/location.service';
-import { Employee } from '../../models/employee.model';
-import { Department } from '../../models/department.model';
-import { Location } from '../../models/location.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,40 +9,12 @@ import { Location } from '../../models/location.model';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent implements OnInit {
-  employeeCount: number = 0;
-  newestHire: Employee | null = null;
-  departmentCount: number = 0;
-  departments: Department[] = [];
-  locations: Location[] = [];
+export class DashboardComponent {
+  employeeCount$;
 
-  constructor(
-    private employeeService: EmployeeService,
-    private departmentService: DepartmentService,
-    private locationService: LocationService,
-  ) {}
-
-  ngOnInit(): void {
-    this.employeeService.employees$.subscribe((data) => {
-      console.log('📦 Employees received:', data.length); // Add this
-      this.employeeCount = data.length;
-      this.newestHire = data.length > 0 ? data[0] : null;
-    });
-
-    this.departmentService.departments$.subscribe((data) => {
-      console.log('📦 Departments received:', data.length); // Add this
-      this.departments = data;
-      this.departmentCount = data.length;
-    });
-
-    this.locationService.locations$.subscribe((data) => {
-      console.log('📦 Locations received:', data.length); // Add this
-      this.locations = data;
-    });
-
-    console.log('🚀 Loading data...');
-    this.employeeService.loadEmployees();
-    this.departmentService.loadDepartments();
-    this.locationService.loadLocations();
+  constructor(private employeeService: EmployeeService) {
+    this.employeeCount$ = this.employeeService.employees$.pipe(
+      map((employees) => employees.length),
+    );
   }
 }
