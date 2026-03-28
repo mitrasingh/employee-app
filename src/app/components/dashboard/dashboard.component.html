@@ -26,7 +26,7 @@
       </div>
       <div class="stat-content">
         <p class="stat-label">Total Employees</p>
-        <h2 class="stat-value">{{ employeeCount }}</h2>
+        <h2 class="stat-value">{{ employeeCount$ | async }}</h2>
         <p class="stat-change positive">Company-wide</p>
       </div>
     </div>
@@ -39,10 +39,8 @@
       </div>
       <div class="stat-content">
         <p class="stat-label">Newest Hire</p>
-        <h2 class="stat-value">
-          {{ newestHire ? newestHire.first_name + ' ' + newestHire.last_name : 'N/A' }}
-        </h2>
-        <p class="stat-change positive">{{ newestHire?.department_name || '' }}</p>
+        <h2 class="stat-value">XX</h2>
+        <p class="stat-change positive">XXE</p>
       </div>
     </div>
 
@@ -54,8 +52,8 @@
       </div>
       <div class="stat-content">
         <p class="stat-label">Departments</p>
-        <h2 class="stat-value">{{ departmentCount }}</h2>
-        <p class="stat-change neutral">Across {{ locations.length }} locations</p>
+        <h2 class="stat-value">XX</h2>
+        <p class="stat-change neutral">Across locationsCount locations</p>
       </div>
     </div>
 
