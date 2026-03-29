@@ -21,5 +21,20 @@ export class DashboardComponent {
     ),
   );
 
+  averageTenure$ = this.employeeService.employees$.pipe(
+    map((employees) => {
+      if (!employees.length) return 0;
+
+      const now = new Date();
+      const totalYears = employees.reduce((sum, employee) => {
+        const hireDate = new Date(employee.hire_date);
+        const years = (now.getTime() - hireDate.getTime()) / (1000 * 60 * 60 * 24 * 365.25);
+        return sum + years;
+      }, 0);
+
+      return (totalYears / employees.length).toFixed(1);
+    }),
+  );
+
   constructor(private employeeService: EmployeeService) {}
 }
