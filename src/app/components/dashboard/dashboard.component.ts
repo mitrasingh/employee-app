@@ -12,5 +12,14 @@ import { map } from 'rxjs';
 export class DashboardComponent {
   employeeCount$ = this.employeeService.employees$.pipe(map((employees) => employees.length));
 
+  newestHire$ = this.employeeService.employees$.pipe(
+    map(
+      (employees) =>
+        [...employees].sort(
+          (a, b) => new Date(b.hire_date).getTime() - new Date(a.hire_date).getTime(),
+        )[0] ?? null,
+    ),
+  );
+
   constructor(private employeeService: EmployeeService) {}
 }
