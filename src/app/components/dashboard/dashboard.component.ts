@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { map } from 'rxjs';
 import { EmployeeService } from '../../services/employee.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,11 +10,7 @@ import { EmployeeService } from '../../services/employee.service';
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent {
-  employeeCount$;
+  employeeCount$ = this.employeeService.employees$.pipe(map((employees) => employees.length));
 
-  constructor(private employeeService: EmployeeService) {
-    this.employeeCount$ = this.employeeService.employees$.pipe(
-      map((employees) => employees.length),
-    );
-  }
+  constructor(private employeeService: EmployeeService) {}
 }
