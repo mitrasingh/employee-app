@@ -39,8 +39,10 @@
       </div>
       <div class="stat-content">
         <p class="stat-label">Newest Hire</p>
-        <h2 class="stat-value">XX</h2>
-        <p class="stat-change positive">XXE</p>
+        @if (newestHire$ | async; as hire) {
+          <h2 class="stat-value">{{ hire.first_name }} {{ hire.last_name }}</h2>
+          <p class="stat-change positive">{{ hire.department_name }}</p>
+        }
       </div>
     </div>
 
