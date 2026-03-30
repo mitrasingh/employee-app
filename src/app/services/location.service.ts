@@ -13,7 +13,9 @@ export class LocationService {
   private locationsSubject = new BehaviorSubject<Location[]>([]);
   locations$ = this.locationsSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loadLocations();
+  }
 
   loadLocations(): void {
     this.http.get<Location[]>(this.baseUrl).subscribe({
