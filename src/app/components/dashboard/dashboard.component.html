@@ -54,8 +54,8 @@
       </div>
       <div class="stat-content">
         <p class="stat-label">Departments</p>
-        <h2 class="stat-value">XX</h2>
-        <p class="stat-change neutral">Across locationsCount locations</p>
+        <h2 class="stat-value">{{ departmentsCount$ | async }}</h2>
+        <p class="stat-change neutral">Across {{ locationsCount$ | async }} locations</p>
       </div>
     </div>
 
