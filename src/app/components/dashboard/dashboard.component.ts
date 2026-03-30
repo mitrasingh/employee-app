@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EmployeeService } from '../../services/employee.service';
 import { map } from 'rxjs';
+import { DepartmentService } from '../../services/department.service';
+import { LocationService } from '../../services/location.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,6 +23,12 @@ export class DashboardComponent {
     ),
   );
 
+  departmentsCount$ = this.departmentService.departments$.pipe(
+    map((departments) => departments.length),
+  );
+
+  locationsCount$ = this.locationService.locations$.pipe(map((locations) => locations.length));
+
   averageTenure$ = this.employeeService.employees$.pipe(
     map((employees) => {
       if (!employees.length) return 0;
@@ -36,5 +44,9 @@ export class DashboardComponent {
     }),
   );
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(
+    private employeeService: EmployeeService,
+    private departmentService: DepartmentService,
+    private locationService: LocationService,
+  ) {}
 }
