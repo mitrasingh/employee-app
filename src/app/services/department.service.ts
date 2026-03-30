@@ -13,7 +13,9 @@ export class DepartmentService {
   private departmentsSubject = new BehaviorSubject<Department[]>([]);
   departments$ = this.departmentsSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loadDepartments();
+  }
 
   loadDepartments(): void {
     this.http.get<Department[]>(this.baseUrl).subscribe({
