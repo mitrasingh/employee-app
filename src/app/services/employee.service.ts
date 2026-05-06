@@ -13,9 +13,9 @@ export class EmployeeService {
 
   private employeesSubject = new BehaviorSubject<Employee[] | null>(null);
 
-  employees$ = this.employeesSubject.pipe(
-    filter((employees): employees is Employee[] => employees !== null),
-  );
+  employees$ = this.employeesSubject
+    .asObservable()
+    .pipe(filter((employees): employees is Employee[] => employees !== null));
 
   constructor(private http: HttpClient) {
     this.loadEmployees();
